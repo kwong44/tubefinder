@@ -11,10 +11,13 @@ Tube Finder is a web-based application that helps surfing storm chasers find unk
 ## Features
 
 - 🗺️ **Interactive Map** - Leaflet-based map focused on Southeast Asian archipelagos
-- 🌊 **Real-time Swell Forecasting** - Wave height, period, and direction data
-- 💨 **Wind Conditions** - Wind speed, direction, and gust information
+- 🌊 **Live Wave Forecasts** - Real-time wave height, period, and direction from Open-Meteo
+- 💨 **Wind Conditions** - Live wind speed, direction, and gust information
+- 🎯 **Surf Scoring** - Intelligent 0-100 scoring system based on optimal conditions
+- 🎨 **Color-Coded Markers** - Visual scoring (Epic, Great, Good, Fair, Poor)
 - 📍 **Famous Surf Spots** - Pre-loaded with world-class breaks
-- ⚡ **Fast & Responsive** - Optimized for mobile and desktop
+- 📊 **Detailed Popups** - Click markers for comprehensive condition breakdown
+- ⚡ **Fast & Responsive** - Optimized for mobile and desktop with smart caching
 - 🆓 **Completely Free** - Uses only public data sources (Open-Meteo, NOAA)
 
 ## Tech Stack
@@ -100,7 +103,7 @@ tubefinder/
 
 ## Current Status
 
-✅ **Completed (Phase 0 - MVP Setup)**
+✅ **Completed (Phase 1 - Live Data Display)**
 - [x] Project initialization and configuration
 - [x] Next.js app with TypeScript
 - [x] Tailwind CSS styling
@@ -109,22 +112,30 @@ tubefinder/
 - [x] Open-Meteo API integration
 - [x] API route for forecast data
 - [x] Responsive layout
+- [x] **React Query data fetching**
+- [x] **Live forecast data display**
+- [x] **Color-coded surf scoring (0-100)**
+- [x] **Detailed forecast popups**
+- [x] **Wind and swell conditions**
+- [x] **Loading and error states**
+- [x] **Map legend**
+- [x] **Sidebar with live conditions**
 
-🚧 **In Progress**
-- [ ] Display live forecast data on map
-- [ ] Spot detail popup with conditions
-- [ ] Wind overlay visualization
-- [ ] Date/time picker for forecasts
+🚧 **In Progress (Phase 2 - Enhanced Features)**
+- [ ] Forecast timeline chart (24 hours/7 days)
+- [ ] Date/time picker for historical forecasts
+- [ ] Wind/swell direction arrows overlay
+- [ ] Spot search and filtering
 
-📋 **Planned (Phase 1 - Core Features)**
+📋 **Planned (Phase 3 - Advanced Features)**
 - [ ] NOAA buoy data integration
-- [ ] Spot scoring algorithm
-- [ ] Search functionality
-- [ ] Filter by conditions
-- [ ] Mobile optimizations
-- [ ] Database integration (Supabase)
+- [ ] Tide predictions
 - [ ] User authentication
 - [ ] Save favorite spots
+- [ ] Custom spot creation
+- [ ] Mobile PWA
+- [ ] Database integration (Supabase)
+- [ ] Community features
 
 ## Development
 
