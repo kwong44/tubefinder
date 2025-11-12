@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import type { Spot } from '@/lib/types';
 import { FAMOUS_SPOTS } from '@/lib/utils/constants';
+import SpotMarker from './SpotMarker';
+import MapLegend from './MapLegend';
 
 // Dynamically import Leaflet components to avoid SSR issues
 const MapContainer = dynamic(
@@ -12,14 +14,6 @@ const MapContainer = dynamic(
 );
 const TileLayer = dynamic(
   () => import('react-leaflet').then((mod) => mod.TileLayer),
-  { ssr: false }
-);
-const Marker = dynamic(
-  () => import('react-leaflet').then((mod) => mod.Marker),
-  { ssr: false }
-);
-const Popup = dynamic(
-  () => import('react-leaflet').then((mod) => mod.Popup),
   { ssr: false }
 );
 
@@ -44,7 +38,7 @@ export default function Map({ spots = FAMOUS_SPOTS, className = '' }: MapProps) 
   }
 
   return (
-    <div className={className}>
+    <div className={`${className} relative`}>
       <MapContainer
         center={[0, 115]}
         zoom={5}
@@ -56,24 +50,12 @@ export default function Map({ spots = FAMOUS_SPOTS, className = '' }: MapProps) 
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {spots.map((spot) => (
-          <Marker key={spot.id} position={[spot.location.lat, spot.location.lng]}>
-            <Popup>
-              <div className="p-2">
-                <h3 className="font-bold text-lg">{spot.name}</h3>
-                <p className="text-sm text-gray-600">{spot.type}</p>
-                {spot.description && (
-                  <p className="text-sm mt-2">{spot.description}</p>
-                )}
-                {spot.rating && (
-                  <div className="mt-2 text-yellow-500">
-                    {'⭐'.repeat(spot.rating)}
-                  </div>
-                )}
-              </div>
-            </Popup>
-          </Marker>
+          <SpotMarker key={spot.id} spot={spot} />
         ))}
       </MapContainer>
+
+      {/* Legend overlay */}
+      <MapLegend />
     </div>
   );
 }
