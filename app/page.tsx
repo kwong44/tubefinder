@@ -8,11 +8,18 @@ import SortControls from './components/SortControls';
 import DateTimePicker from './components/DateTimePicker';
 import { FAMOUS_SPOTS } from '@/lib/utils/constants';
 import { useFilterStore } from '@/lib/stores/filter-store';
+import { useCustomSpots } from '@/lib/hooks/useCustomSpots';
 import { Menu, X } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 export default function HomePage() {
   const { isSidebarOpen, toggleSidebar, setSidebarOpen } = useFilterStore();
+  const { customSpotsAsSpots } = useCustomSpots();
+
+  // Merge default famous spots with custom user spots
+  const allSpots = useMemo(() => {
+    return [...FAMOUS_SPOTS, ...customSpotsAsSpots];
+  }, [customSpotsAsSpots]);
 
   // Close sidebar on mobile by default
   useEffect(() => {
@@ -92,7 +99,7 @@ export default function HomePage() {
             </div>
 
             {/* Spot List */}
-            <SpotList spots={FAMOUS_SPOTS} />
+            <SpotList spots={allSpots} />
 
             {/* Info Boxes */}
             <div className="mt-6 space-y-3">
@@ -130,7 +137,7 @@ export default function HomePage() {
 
         {/* Map */}
         <div className="flex-1 relative">
-          <Map className="h-full w-full" />
+          <Map spots={allSpots} className="h-full w-full" />
         </div>
       </div>
     </div>

@@ -33,7 +33,9 @@ Tube Finder is a web-based application that helps surfing storm chasers find unk
 - 💾 **Filter Presets** - Save and load custom filter configurations
 - 🔐 **User Authentication** - Email/password, Google OAuth, magic links
 - ❤️ **Favorites System** - Save spots, filter by favorites, sort by recency
-- ⚡ **Performance** - Smart caching, optimized bundle (186KB First Load)
+- ➕ **Custom Spots** - Create and share your own surf spots
+- 👤 **User Profiles** - Track your activity, favorites, and custom spots
+- ⚡ **Performance** - Smart caching, optimized bundle (187KB First Load)
 
 ## Tech Stack
 
@@ -179,10 +181,17 @@ tubefinder/
 - [x] **Favorites sorting** (by most recent favorite date)
 - [x] **Empty states** (contextual messaging for unauthenticated users)
 
-📋 **Planned (Phase 5C - User Content)**
-- [ ] Custom spot creation interface
-- [ ] User profile management
-- [ ] Photo uploads for spots
+✅ **Completed (Phase 5C - User Content)**
+- [x] **Custom spot creation** (CreateSpotModal with full form validation)
+- [x] **Custom spots database** (Supabase schema with RLS policies)
+- [x] **useCustomSpots hook** (CRUD operations with React Query)
+- [x] **Spot type & location** (lat/lng, type, directions, skill level)
+- [x] **Privacy controls** (public/private spot visibility)
+- [x] **Merged spot display** (custom + default spots on map and list)
+- [x] **User profile modal** (stats, favorites count, custom spots list)
+- [x] **Profile integration** (accessible from UserMenu)
+- [x] **Photo storage infrastructure** (Supabase storage bucket + RLS policies)
+- [x] **Photo metadata table** (track uploads with spot associations)
 
 📋 **Planned (Phase 5D - Enhanced Data)**
 - [ ] NOAA buoy data integration

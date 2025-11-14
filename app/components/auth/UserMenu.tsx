@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { useAuthStore } from '@/lib/stores/auth-store';
+import { useUIStore } from '@/lib/stores/ui-store';
 import { createClient } from '@/lib/services/supabase-client';
-import { User, LogOut, Heart, MapPin, Settings } from 'lucide-react';
+import { User, LogOut, Heart, MapPin } from 'lucide-react';
+import UserProfileModal from './UserProfileModal';
 
 interface UserMenuProps {
   onSignInClick: () => void;
@@ -11,6 +13,7 @@ interface UserMenuProps {
 
 export default function UserMenu({ onSignInClick }: UserMenuProps) {
   const { user, loading } = useAuthStore();
+  const { isProfileModalOpen, openProfileModal, closeProfileModal } = useUIStore();
   const [isOpen, setIsOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
 
@@ -102,14 +105,13 @@ export default function UserMenu({ onSignInClick }: UserMenuProps) {
 
               <button
                 onClick={() => {
-                  // TODO: Open settings modal
+                  openProfileModal();
                   setIsOpen(false);
                 }}
                 className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-3 transition"
               >
-                <Settings className="h-4 w-4" />
-                Settings
-                <span className="ml-auto text-xs text-gray-500">Coming soon</span>
+                <User className="h-4 w-4" />
+                Profile & Settings
               </button>
             </div>
 
@@ -127,6 +129,11 @@ export default function UserMenu({ onSignInClick }: UserMenuProps) {
           </div>
         </>
       )}
+
+      <UserProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={closeProfileModal}
+      />
     </div>
   );
 }
