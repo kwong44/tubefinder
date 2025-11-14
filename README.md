@@ -121,13 +121,19 @@ tubefinder/
 - [x] **Map legend**
 - [x] **Sidebar with live conditions**
 
-🚧 **In Progress (Phase 2 - Enhanced Features)**
-- [ ] Forecast timeline chart (24 hours/7 days)
-- [ ] Date/time picker for historical forecasts
-- [ ] Wind/swell direction arrows overlay
-- [ ] Spot search and filtering
+✅ **Completed (Phase 2 - Enhanced Features)**
+- [x] **Forecast timeline chart (24 hours/7 days)**
+- [x] **Wind/swell direction arrows in popups**
+- [x] **Condition trend indicators (improving/worsening)**
+- [x] **Interactive chart with hover tooltips**
+- [x] **Tabbed 24h/7d views**
 
-📋 **Planned (Phase 3 - Advanced Features)**
+🚧 **In Progress (Phase 3 - Advanced Features)**
+- [ ] Date/time picker for historical forecasts
+- [ ] Spot search and filtering
+- [ ] Wind/swell overlay on map tiles
+
+📋 **Planned (Phase 4 - Advanced Features)**
 - [ ] NOAA buoy data integration
 - [ ] Tide predictions
 - [ ] User authentication
@@ -136,6 +142,7 @@ tubefinder/
 - [ ] Mobile PWA
 - [ ] Database integration (Supabase)
 - [ ] Community features
+- [ ] Email/SMS alerts for optimal conditions
 
 ## Development
 
