@@ -9,6 +9,7 @@ interface ForecastResponse {
 
 /**
  * Hook to fetch forecast data for a specific location
+ * Automatically integrates with selected date from map store
  */
 export function useForecast(location: Coordinates, enabled = true) {
   return useQuery<ForecastResponse>({
@@ -34,11 +35,37 @@ export function useForecast(location: Coordinates, enabled = true) {
 }
 
 /**
- * Get current conditions from forecast data (first entry)
+ * Get current conditions from forecast data
+ * If selectedDate is provided, finds the closest matching forecast
+ * Otherwise returns the first entry (current/live conditions)
  */
-export function getCurrentConditions(forecast?: ForecastData[]) {
+export function getCurrentConditions(
+  forecast?: ForecastData[],
+  selectedDate?: Date | null
+) {
   if (!forecast || forecast.length === 0) return null;
-  return forecast[0];
+
+  // If no date selected, return first entry (live conditions)
+  if (!selectedDate) {
+    return forecast[0];
+  }
+
+  // Find the forecast entry closest to the selected date
+  const targetTime = selectedDate.getTime();
+  let closestForecast = forecast[0];
+  let closestDiff = Math.abs(
+    new Date(forecast[0].timestamp).getTime() - targetTime
+  );
+
+  for (const item of forecast) {
+    const diff = Math.abs(new Date(item.timestamp).getTime() - targetTime);
+    if (diff < closestDiff) {
+      closestDiff = diff;
+      closestForecast = item;
+    }
+  }
+
+  return closestForecast;
 }
 
 /**

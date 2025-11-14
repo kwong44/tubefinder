@@ -4,6 +4,7 @@ import { useMemo, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import type { Spot } from '@/lib/types';
 import { useForecast, getCurrentConditions } from '@/lib/hooks/useForecast';
+import { useMapStore } from '@/lib/stores/map-store';
 import { calculateSurfScore, getScoreColor } from '@/lib/utils/helpers';
 import ForecastPopup from './ForecastPopup';
 
@@ -46,6 +47,7 @@ function createColoredIcon(color: string, isLoading: boolean, L: any) {
 export default function SpotMarker({ spot }: SpotMarkerProps) {
   const [L, setL] = useState<any>(null);
   const { data, isLoading, error } = useForecast(spot.location);
+  const { selectedDate } = useMapStore();
 
   useEffect(() => {
     // Dynamically import Leaflet only on client side
@@ -55,8 +57,8 @@ export default function SpotMarker({ spot }: SpotMarkerProps) {
   }, []);
 
   const currentConditions = useMemo(() => {
-    return getCurrentConditions(data?.forecast);
-  }, [data]);
+    return getCurrentConditions(data?.forecast, selectedDate);
+  }, [data, selectedDate]);
 
   const score = useMemo(() => {
     if (!currentConditions) return null;

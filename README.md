@@ -28,7 +28,10 @@ Tube Finder is a web-based application that helps surfing storm chasers find unk
 - ⏰ **Forecast Timeline** - 24-hour and 7-day interactive charts
 - 🧭 **Direction Arrows** - Visual wave/wind direction indicators
 - 📊 **Trend Analysis** - See if conditions are improving or worsening
-- ⚡ **Performance** - Smart caching, optimized bundle (125KB First Load)
+- 📅 **Date/Time Picker** - View forecasts at different times (quick presets + custom selection)
+- 🗺️ **Wind/Swell Overlay** - Toggle directional arrows on map (wind/wave/both)
+- 💾 **Filter Presets** - Save and load custom filter configurations
+- ⚡ **Performance** - Smart caching, optimized bundle (129KB First Load)
 
 ## Tech Stack
 
@@ -147,12 +150,16 @@ tubefinder/
 - [x] **Filter state management** (Zustand store)
 - [x] **Improved UX** (empty states, loading indicators, feedback)
 
-🚧 **In Progress (Phase 4 - Advanced Features)**
-- [ ] Date/time picker for historical forecasts
-- [ ] Wind/swell overlay on map tiles
-- [ ] Saved filter presets
+✅ **Completed (Phase 4 - Advanced Features)**
+- [x] **Date/time picker** for viewing forecasts at different times
+- [x] **Quick presets** (Now, +6h, +12h, +24h, +3d, +7d)
+- [x] **Custom date/time selection** for precise forecast viewing
+- [x] **Wind/swell overlay arrows** on map tiles
+- [x] **Overlay controls** (toggle wind/wave/both directions)
+- [x] **Filter presets** (save/load/delete custom filter configurations)
+- [x] **LocalStorage persistence** for saved presets
 
-📋 **Planned (Phase 4 - Advanced Features)**
+📋 **Planned (Phase 5 - Data & Integration)**
 - [ ] NOAA buoy data integration
 - [ ] Tide predictions
 - [ ] User authentication

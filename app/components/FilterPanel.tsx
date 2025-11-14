@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useFilterStore } from '@/lib/stores/filter-store';
 import { Filter, X, ChevronDown, ChevronUp } from 'lucide-react';
+import PresetManager from './PresetManager';
 
 export default function FilterPanel() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -51,6 +52,14 @@ export default function FilterPanel() {
       {/* Filter Content */}
       {isExpanded && (
         <div className="px-4 pb-4 space-y-4 border-t border-gray-200">
+          {/* Preset Manager */}
+          <div className="pt-2">
+            <PresetManager />
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-gray-200"></div>
+
           {/* Score Range */}
           <div>
             <label className="block text-xs font-semibold text-gray-700 mb-2">

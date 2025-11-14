@@ -6,10 +6,12 @@ interface MapState {
   zoom: number;
   bounds: MapBounds | null;
   selectedSpotId: string | null;
+  selectedDate: Date | null; // null = current/live forecast
   setCenter: (center: Coordinates) => void;
   setZoom: (zoom: number) => void;
   setBounds: (bounds: MapBounds) => void;
   setSelectedSpot: (spotId: string | null) => void;
+  setSelectedDate: (date: Date | null) => void;
 }
 
 // Default center: Indonesia/Philippines region
@@ -21,8 +23,10 @@ export const useMapStore = create<MapState>((set) => ({
   zoom: DEFAULT_ZOOM,
   bounds: null,
   selectedSpotId: null,
+  selectedDate: null, // null = live/current forecast
   setCenter: (center) => set({ center }),
   setZoom: (zoom) => set({ zoom }),
   setBounds: (bounds) => set({ bounds }),
   setSelectedSpot: (spotId) => set({ selectedSpotId: spotId }),
+  setSelectedDate: (date) => set({ selectedDate: date }),
 }));

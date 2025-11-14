@@ -5,6 +5,7 @@ import SpotList from './components/SpotList';
 import SearchBar from './components/SearchBar';
 import FilterPanel from './components/FilterPanel';
 import SortControls from './components/SortControls';
+import DateTimePicker from './components/DateTimePicker';
 import { FAMOUS_SPOTS } from '@/lib/utils/constants';
 import { useFilterStore } from '@/lib/stores/filter-store';
 import { Menu, X } from 'lucide-react';
@@ -65,6 +66,11 @@ export default function HomePage() {
               <p className="text-xs text-gray-600">
                 Real-time conditions from Open-Meteo
               </p>
+            </div>
+
+            {/* Date/Time Picker */}
+            <div className="mb-4">
+              <DateTimePicker />
             </div>
 
             {/* Search */}

@@ -6,6 +6,9 @@ import type { Spot } from '@/lib/types';
 import { FAMOUS_SPOTS } from '@/lib/utils/constants';
 import SpotMarker from './SpotMarker';
 import MapLegend from './MapLegend';
+import MapEvents from './MapEvents';
+import WindSwellOverlay from './WindSwellOverlay';
+import OverlayControls from './OverlayControls';
 
 // Dynamically import Leaflet components to avoid SSR issues
 const MapContainer = dynamic(
@@ -24,10 +27,17 @@ interface MapProps {
 
 export default function Map({ spots = FAMOUS_SPOTS, className = '' }: MapProps) {
   const [isClient, setIsClient] = useState(false);
+  const [overlayEnabled, setOverlayEnabled] = useState(false);
+  const [overlayType, setOverlayType] = useState<'wind' | 'wave' | 'both'>('both');
 
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  const handleOverlayChange = (enabled: boolean, type: 'wind' | 'wave' | 'both') => {
+    setOverlayEnabled(enabled);
+    setOverlayType(type);
+  };
 
   if (!isClient) {
     return (
@@ -49,10 +59,15 @@ export default function Map({ spots = FAMOUS_SPOTS, className = '' }: MapProps) 
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <MapEvents />
         {spots.map((spot) => (
           <SpotMarker key={spot.id} spot={spot} />
         ))}
+        <WindSwellOverlay type={overlayType} enabled={overlayEnabled} />
       </MapContainer>
+
+      {/* Overlay controls */}
+      <OverlayControls onOverlayChange={handleOverlayChange} />
 
       {/* Legend overlay */}
       <MapLegend />

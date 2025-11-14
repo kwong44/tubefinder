@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import type { Spot } from '@/lib/types';
 import { useForecast, getCurrentConditions } from '@/lib/hooks/useForecast';
+import { useMapStore } from '@/lib/stores/map-store';
 import {
   formatWaveHeight,
   calculateSurfScore,
@@ -16,10 +17,11 @@ interface SpotCardProps {
 
 export default function SpotCard({ spot, onClick }: SpotCardProps) {
   const { data, isLoading } = useForecast(spot.location);
+  const { selectedDate } = useMapStore();
 
   const currentConditions = useMemo(() => {
-    return getCurrentConditions(data?.forecast);
-  }, [data]);
+    return getCurrentConditions(data?.forecast, selectedDate);
+  }, [data, selectedDate]);
 
   const score = useMemo(() => {
     if (!currentConditions) return null;
