@@ -66,8 +66,15 @@ export default function SpotCard({ spot, onClick }: SpotCardProps) {
 
   return (
     <div
-      className="border border-gray-200 rounded-lg p-3 hover:border-ocean-400 hover:shadow-md transition cursor-pointer"
+      className="border border-gray-200 rounded-lg p-4 hover:border-ocean-400 hover:shadow-md transition cursor-pointer active:scale-98 touch-manipulation"
       onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onClick?.();
+        }
+      }}
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-2">
@@ -101,25 +108,25 @@ export default function SpotCard({ spot, onClick }: SpotCardProps) {
         <div className="space-y-2">
           {/* Score Badge with Trend */}
           {score !== null && (
-            <div className="flex items-center justify-center gap-1">
+            <div className="flex items-center justify-center gap-2">
               <div
-                className="px-3 py-1 rounded-full text-white text-xs font-bold"
+                className="px-4 py-1.5 rounded-full text-white text-sm font-bold shadow-sm"
                 style={{ backgroundColor: getScoreColor(score) }}
               >
-                Score: {score}/100
+                {score}/100
               </div>
               {trend === 'improving' && (
-                <span className="text-green-600" title="Improving conditions">
+                <span className="text-green-600 text-lg" title="Improving conditions">
                   ↗
                 </span>
               )}
               {trend === 'worsening' && (
-                <span className="text-red-600" title="Worsening conditions">
+                <span className="text-red-600 text-lg" title="Worsening conditions">
                   ↘
                 </span>
               )}
               {trend === 'stable' && (
-                <span className="text-gray-500" title="Stable conditions">
+                <span className="text-gray-500 text-lg" title="Stable conditions">
                   →
                 </span>
               )}
@@ -127,16 +134,16 @@ export default function SpotCard({ spot, onClick }: SpotCardProps) {
           )}
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="bg-blue-50 rounded px-2 py-1">
-              <div className="text-gray-600">Wave</div>
-              <div className="font-semibold text-blue-700">
+          <div className="grid grid-cols-2 gap-2 text-sm">
+            <div className="bg-blue-50 rounded-lg px-3 py-2">
+              <div className="text-gray-600 text-xs">Wave</div>
+              <div className="font-semibold text-blue-700 mt-0.5">
                 {formatWaveHeight(currentConditions.wave.height)}
               </div>
             </div>
-            <div className="bg-green-50 rounded px-2 py-1">
-              <div className="text-gray-600">Wind</div>
-              <div className="font-semibold text-green-700">
+            <div className="bg-green-50 rounded-lg px-3 py-2">
+              <div className="text-gray-600 text-xs">Wind</div>
+              <div className="font-semibold text-green-700 mt-0.5">
                 {(currentConditions.wind.speed * 3.6).toFixed(0)} km/h
               </div>
             </div>
