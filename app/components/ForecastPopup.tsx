@@ -14,7 +14,12 @@ import { format } from 'date-fns';
 import ForecastChart from './ForecastChart';
 import DirectionArrow from './DirectionArrow';
 import FavoriteButton from './spots/FavoriteButton';
+import BuoyObservationCard from './data/BuoyObservationCard';
+import TideChart from './data/TideChart';
+import DataSourceBadge from './data/DataSourceBadge';
 import { useUIStore } from '@/lib/stores/ui-store';
+import { useBuoyData } from '@/lib/hooks/useBuoyData';
+import { useTideData } from '@/lib/hooks/useTideData';
 
 interface ForecastPopupProps {
   spot: Spot;
@@ -33,6 +38,10 @@ export default function ForecastPopup({
 }: ForecastPopupProps) {
   const [chartView, setChartView] = useState<'24h' | '7d'>('24h');
   const { openSignInModal } = useUIStore();
+
+  // Fetch buoy and tide data
+  const { observation, buoyStation, hasBuoyData } = useBuoyData(spot.id);
+  const { tideSummary, hasTideData } = useTideData(spot.id);
 
   const score = currentConditions
     ? calculateSurfScore({
@@ -102,8 +111,11 @@ export default function ForecastPopup({
           {/* Wave Conditions */}
           <div className="space-y-2 mb-3">
             <div className="bg-blue-50 rounded p-2">
-              <div className="text-xs text-gray-600 uppercase font-semibold mb-1">
-                Wave
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-xs text-gray-600 uppercase font-semibold">
+                  Wave
+                </div>
+                <DataSourceBadge source="open-meteo" size="sm" showLabel={false} />
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-700">Height:</span>
@@ -197,6 +209,24 @@ export default function ForecastPopup({
           <div className="text-xs text-gray-500 text-center pt-2 border-t">
             Updated: {format(new Date(currentConditions.timestamp), 'PPp')}
           </div>
+
+          {/* Buoy Observations */}
+          {hasBuoyData && observation && buoyStation && (
+            <div className="mt-4">
+              <BuoyObservationCard
+                observation={observation}
+                buoyStation={buoyStation}
+                compact={true}
+              />
+            </div>
+          )}
+
+          {/* Tide Predictions */}
+          {hasTideData && tideSummary && (
+            <div className="mt-4">
+              <TideChart tideSummary={tideSummary} compact={true} />
+            </div>
+          )}
 
           {/* Forecast Chart */}
           {fullForecast && fullForecast.length > 0 && (

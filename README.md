@@ -35,7 +35,10 @@ Tube Finder is a web-based application that helps surfing storm chasers find unk
 - ❤️ **Favorites System** - Save spots, filter by favorites, sort by recency
 - ➕ **Custom Spots** - Create and share your own surf spots
 - 👤 **User Profiles** - Track your activity, favorites, and custom spots
-- ⚡ **Performance** - Smart caching, optimized bundle (187KB First Load)
+- 🌊 **Live Buoy Data** - Real-time wave observations from NOAA buoys
+- 🌙 **Tide Predictions** - High/low tide forecasts with visual timeline
+- 🏷️ **Data Source Indicators** - See where data comes from (forecast/buoy/tide)
+- ⚡ **Performance** - Smart caching, optimized bundle (191KB First Load)
 
 ## Tech Stack
 
@@ -193,11 +196,17 @@ tubefinder/
 - [x] **Photo storage infrastructure** (Supabase storage bucket + RLS policies)
 - [x] **Photo metadata table** (track uploads with spot associations)
 
-📋 **Planned (Phase 5D - Enhanced Data)**
-- [ ] NOAA buoy data integration
-- [ ] Tide predictions and charts
-- [ ] Forecast vs. observed comparison
-- [ ] Data source indicators
+✅ **Completed (Phase 5D - Enhanced Data)**
+- [x] **NOAA buoy integration** (real-time wave and wind observations)
+- [x] **Buoy data types and API** (NDBC observations with retry logic)
+- [x] **useBuoyData hook** (React Query with caching and error handling)
+- [x] **BuoyObservationCard** (display live buoy data with compact mode)
+- [x] **NOAA tide predictions** (CO-OPS API for high/low tide forecasts)
+- [x] **useTideData hook** (fetch and cache tide predictions)
+- [x] **TideChart component** (visual timeline of upcoming tides)
+- [x] **Data source badges** (show data origin: forecast, buoy, tide)
+- [x] **Integrated in ForecastPopup** (buoy and tide data alongside forecasts)
+- [x] **Buoy station mapping** (link surf spots to nearest buoy stations)
 
 📋 **Planned (Phase 6 - Community & Alerts)**
 - [ ] Spot ratings and reviews
