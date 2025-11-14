@@ -10,15 +10,25 @@ Tube Finder is a web-based application that helps surfing storm chasers find unk
 
 ## Features
 
+### Core Functionality
 - 🗺️ **Interactive Map** - Leaflet-based map focused on Southeast Asian archipelagos
 - 🌊 **Live Wave Forecasts** - Real-time wave height, period, and direction from Open-Meteo
 - 💨 **Wind Conditions** - Live wind speed, direction, and gust information
 - 🎯 **Surf Scoring** - Intelligent 0-100 scoring system based on optimal conditions
 - 🎨 **Color-Coded Markers** - Visual scoring (Epic, Great, Good, Fair, Poor)
-- 📍 **Famous Surf Spots** - Pre-loaded with world-class breaks
+- 📍 **Famous Surf Spots** - Pre-loaded with world-class breaks (Uluwatu, G-Land, Cloud 9, Mentawai)
 - 📊 **Detailed Popups** - Click markers for comprehensive condition breakdown
-- ⚡ **Fast & Responsive** - Optimized for mobile and desktop with smart caching
 - 🆓 **Completely Free** - Uses only public data sources (Open-Meteo, NOAA)
+
+### Advanced Features
+- 🔍 **Real-time Search** - Instant spot filtering by name
+- 🎛️ **Smart Filters** - Filter by score, wave height, and spot type
+- 📈 **Sort Controls** - Sort by score, wave height, or name
+- 📱 **Mobile Responsive** - Collapsible sidebar with smooth animations
+- ⏰ **Forecast Timeline** - 24-hour and 7-day interactive charts
+- 🧭 **Direction Arrows** - Visual wave/wind direction indicators
+- 📊 **Trend Analysis** - See if conditions are improving or worsening
+- ⚡ **Performance** - Smart caching, optimized bundle (125KB First Load)
 
 ## Tech Stack
 
@@ -128,10 +138,19 @@ tubefinder/
 - [x] **Interactive chart with hover tooltips**
 - [x] **Tabbed 24h/7d views**
 
-🚧 **In Progress (Phase 3 - Advanced Features)**
+✅ **Completed (Phase 3 - Search, Filter & Mobile)**
+- [x] **Real-time search** (filter spots by name)
+- [x] **Advanced filters** (score range, wave height, spot type)
+- [x] **Sort controls** (by score, wave height, or name)
+- [x] **Responsive sidebar** (collapsible on mobile)
+- [x] **Mobile optimizations** (touch targets, spacing, gestures)
+- [x] **Filter state management** (Zustand store)
+- [x] **Improved UX** (empty states, loading indicators, feedback)
+
+🚧 **In Progress (Phase 4 - Advanced Features)**
 - [ ] Date/time picker for historical forecasts
-- [ ] Spot search and filtering
 - [ ] Wind/swell overlay on map tiles
+- [ ] Saved filter presets
 
 📋 **Planned (Phase 4 - Advanced Features)**
 - [ ] NOAA buoy data integration
