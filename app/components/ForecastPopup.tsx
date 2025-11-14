@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import type { Spot, ForecastData } from '@/lib/types';
 import {
   formatWaveHeight,
@@ -10,10 +11,13 @@ import {
   calculateSurfScore,
 } from '@/lib/utils/helpers';
 import { format } from 'date-fns';
+import ForecastChart from './ForecastChart';
+import DirectionArrow from './DirectionArrow';
 
 interface ForecastPopupProps {
   spot: Spot;
   currentConditions: ForecastData | null;
+  fullForecast?: ForecastData[];
   isLoading?: boolean;
   error?: Error | null;
 }
@@ -21,9 +25,12 @@ interface ForecastPopupProps {
 export default function ForecastPopup({
   spot,
   currentConditions,
+  fullForecast,
   isLoading,
   error,
 }: ForecastPopupProps) {
+  const [chartView, setChartView] = useState<'24h' | '7d'>('24h');
+
   const score = currentConditions
     ? calculateSurfScore({
         waveHeight: currentConditions.wave.height,
@@ -102,9 +109,16 @@ export default function ForecastPopup({
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-700">Direction:</span>
-                <span className="font-semibold text-blue-700">
-                  {degreesToDirection(currentConditions.wave.direction)}
-                </span>
+                <div className="flex items-center gap-1">
+                  <DirectionArrow
+                    direction={currentConditions.wave.direction}
+                    size={16}
+                    color="#1d4ed8"
+                  />
+                  <span className="font-semibold text-blue-700">
+                    {degreesToDirection(currentConditions.wave.direction)}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -128,9 +142,16 @@ export default function ForecastPopup({
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-700">Direction:</span>
-                  <span className="font-semibold text-indigo-700">
-                    {degreesToDirection(currentConditions.swell.direction)}
-                  </span>
+                  <div className="flex items-center gap-1">
+                    <DirectionArrow
+                      direction={currentConditions.swell.direction}
+                      size={16}
+                      color="#4f46e5"
+                    />
+                    <span className="font-semibold text-indigo-700">
+                      {degreesToDirection(currentConditions.swell.direction)}
+                    </span>
+                  </div>
                 </div>
               </div>
             )}
@@ -148,9 +169,16 @@ export default function ForecastPopup({
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-700">Direction:</span>
-                <span className="font-semibold text-green-700">
-                  {degreesToDirection(currentConditions.wind.direction)}
-                </span>
+                <div className="flex items-center gap-1">
+                  <DirectionArrow
+                    direction={currentConditions.wind.direction}
+                    size={16}
+                    color="#15803d"
+                  />
+                  <span className="font-semibold text-green-700">
+                    {degreesToDirection(currentConditions.wind.direction)}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -159,6 +187,40 @@ export default function ForecastPopup({
           <div className="text-xs text-gray-500 text-center pt-2 border-t">
             Updated: {format(new Date(currentConditions.timestamp), 'PPp')}
           </div>
+
+          {/* Forecast Chart */}
+          {fullForecast && fullForecast.length > 0 && (
+            <div className="mt-4 pt-4 border-t">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-semibold text-gray-700">
+                  Forecast
+                </h4>
+                <div className="flex gap-1">
+                  <button
+                    onClick={() => setChartView('24h')}
+                    className={`px-2 py-1 text-xs rounded ${
+                      chartView === '24h'
+                        ? 'bg-ocean-600 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    24h
+                  </button>
+                  <button
+                    onClick={() => setChartView('7d')}
+                    className={`px-2 py-1 text-xs rounded ${
+                      chartView === '7d'
+                        ? 'bg-ocean-600 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    7d
+                  </button>
+                </div>
+              </div>
+              <ForecastChart forecast={fullForecast} type={chartView} />
+            </div>
+          )}
         </>
       )}
 

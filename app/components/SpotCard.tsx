@@ -38,6 +38,32 @@ export default function SpotCard({ spot, onClick }: SpotCardProps) {
     });
   }, [currentConditions, spot]);
 
+  // Calculate trend (comparing current to 6 hours from now)
+  const trend = useMemo(() => {
+    if (!data?.forecast || data.forecast.length < 7) return null;
+
+    const futureConditions = data.forecast[6]; // 6 hours from now
+    const futureScore = calculateSurfScore({
+      waveHeight: futureConditions.wave.height,
+      wavePeriod: futureConditions.wave.period,
+      waveDirection: futureConditions.wave.direction,
+      windSpeed: futureConditions.wind.speed,
+      windDirection: futureConditions.wind.direction,
+      optimalSwellHeight:
+        (spot.optimalSwell.minHeight + spot.optimalSwell.maxHeight) / 2,
+      optimalSwellDirection: spot.optimalSwell.direction,
+      optimalPeriod: spot.optimalSwell.minPeriod,
+      spotFacing: spot.facing,
+    });
+
+    if (score === null) return null;
+
+    const diff = futureScore - score;
+    if (diff > 10) return 'improving';
+    if (diff < -10) return 'worsening';
+    return 'stable';
+  }, [data, score, spot]);
+
   return (
     <div
       className="border border-gray-200 rounded-lg p-3 hover:border-ocean-400 hover:shadow-md transition cursor-pointer"
@@ -73,15 +99,30 @@ export default function SpotCard({ spot, onClick }: SpotCardProps) {
 
       {!isLoading && currentConditions && (
         <div className="space-y-2">
-          {/* Score Badge */}
+          {/* Score Badge with Trend */}
           {score !== null && (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center gap-1">
               <div
                 className="px-3 py-1 rounded-full text-white text-xs font-bold"
                 style={{ backgroundColor: getScoreColor(score) }}
               >
                 Score: {score}/100
               </div>
+              {trend === 'improving' && (
+                <span className="text-green-600" title="Improving conditions">
+                  ↗
+                </span>
+              )}
+              {trend === 'worsening' && (
+                <span className="text-red-600" title="Worsening conditions">
+                  ↘
+                </span>
+              )}
+              {trend === 'stable' && (
+                <span className="text-gray-500" title="Stable conditions">
+                  →
+                </span>
+              )}
             </div>
           )}
 

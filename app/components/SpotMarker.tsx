@@ -94,6 +94,7 @@ export default function SpotMarker({ spot }: SpotMarkerProps) {
         <ForecastPopup
           spot={spot}
           currentConditions={currentConditions}
+          fullForecast={data?.forecast}
           isLoading={isLoading}
           error={error}
         />
