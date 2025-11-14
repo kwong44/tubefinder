@@ -13,6 +13,8 @@ import {
 import { format } from 'date-fns';
 import ForecastChart from './ForecastChart';
 import DirectionArrow from './DirectionArrow';
+import FavoriteButton from './spots/FavoriteButton';
+import { useUIStore } from '@/lib/stores/ui-store';
 
 interface ForecastPopupProps {
   spot: Spot;
@@ -30,6 +32,7 @@ export default function ForecastPopup({
   error,
 }: ForecastPopupProps) {
   const [chartView, setChartView] = useState<'24h' | '7d'>('24h');
+  const { openSignInModal } = useUIStore();
 
   const score = currentConditions
     ? calculateSurfScore({
@@ -50,7 +53,14 @@ export default function ForecastPopup({
     <div className="min-w-[280px] max-w-[320px]">
       {/* Header */}
       <div className="border-b pb-2 mb-3">
-        <h3 className="font-bold text-lg text-gray-900">{spot.name}</h3>
+        <div className="flex items-start justify-between">
+          <h3 className="font-bold text-lg text-gray-900 flex-1">{spot.name}</h3>
+          <FavoriteButton
+            spotId={spot.id}
+            size="lg"
+            onAuthRequired={() => openSignInModal('Sign in to save your favorite spots! 🌊')}
+          />
+        </div>
         <div className="flex items-center justify-between mt-1">
           <span className="text-xs text-gray-500 capitalize">{spot.type}</span>
           {spot.rating && (

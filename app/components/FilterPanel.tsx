@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { useFilterStore } from '@/lib/stores/filter-store';
-import { Filter, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { useAuthStore } from '@/lib/stores/auth-store';
+import { useUIStore } from '@/lib/stores/ui-store';
+import { Filter, X, ChevronDown, ChevronUp, Heart } from 'lucide-react';
 import PresetManager from './PresetManager';
 
 export default function FilterPanel() {
@@ -16,15 +18,20 @@ export default function FilterPanel() {
     setWaveHeightRange,
     spotTypes,
     toggleSpotType,
+    showOnlyFavorites,
+    setShowOnlyFavorites,
     resetFilters,
   } = useFilterStore();
+  const { user } = useAuthStore();
+  const { openSignInModal } = useUIStore();
 
   const hasActiveFilters =
     minScore > 0 ||
     maxScore < 100 ||
     minWaveHeight > 0 ||
     maxWaveHeight < 10 ||
-    spotTypes.length < 4;
+    spotTypes.length < 4 ||
+    showOnlyFavorites;
 
   return (
     <div className="bg-gray-50 rounded-lg border border-gray-200">
@@ -59,6 +66,38 @@ export default function FilterPanel() {
 
           {/* Divider */}
           <div className="border-t border-gray-200"></div>
+
+          {/* Favorites Toggle */}
+          <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200">
+            <div className="flex items-center gap-2">
+              <Heart className="h-4 w-4 text-red-500 fill-current" />
+              <span className="text-sm font-medium text-gray-700">
+                Show Only Favorites
+              </span>
+            </div>
+            <button
+              onClick={() => {
+                if (!user) {
+                  openSignInModal('Sign in to filter by your favorite spots! 🌊');
+                  return;
+                }
+                setShowOnlyFavorites(!showOnlyFavorites);
+              }}
+              className={`
+                relative inline-flex h-6 w-11 items-center rounded-full transition-colors
+                ${showOnlyFavorites && user ? 'bg-ocean-600' : 'bg-gray-300'}
+                ${!user ? 'opacity-50' : 'hover:opacity-80'}
+              `}
+              aria-label="Toggle favorites filter"
+            >
+              <span
+                className={`
+                  inline-block h-4 w-4 transform rounded-full bg-white transition-transform
+                  ${showOnlyFavorites && user ? 'translate-x-6' : 'translate-x-1'}
+                `}
+              />
+            </button>
+          </div>
 
           {/* Score Range */}
           <div>

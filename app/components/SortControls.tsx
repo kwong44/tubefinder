@@ -1,17 +1,27 @@
 'use client';
 
 import { useFilterStore } from '@/lib/stores/filter-store';
-import { ArrowUpDown, TrendingUp, Waves, SortAsc } from 'lucide-react';
+import { ArrowUpDown, TrendingUp, Waves, SortAsc, Clock } from 'lucide-react';
 
 export default function SortControls() {
-  const { sortBy, sortDirection, setSortBy, toggleSortDirection } =
+  const { sortBy, sortDirection, setSortBy, toggleSortDirection, showOnlyFavorites } =
     useFilterStore();
 
-  const options = [
+  const baseOptions = [
     { value: 'score' as const, label: 'Score', icon: TrendingUp },
     { value: 'waveHeight' as const, label: 'Wave Height', icon: Waves },
     { value: 'name' as const, label: 'Name', icon: SortAsc },
   ];
+
+  const favoriteOption = {
+    value: 'favoriteDate' as const,
+    label: 'Recent',
+    icon: Clock,
+  };
+
+  const options = showOnlyFavorites
+    ? [favoriteOption, ...baseOptions]
+    : baseOptions;
 
   return (
     <div className="flex items-center gap-2">

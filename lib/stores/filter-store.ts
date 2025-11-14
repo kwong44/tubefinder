@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { Spot } from '@/lib/types';
 
-export type SortOption = 'score' | 'waveHeight' | 'name';
+export type SortOption = 'score' | 'waveHeight' | 'name' | 'favoriteDate';
 export type SortDirection = 'asc' | 'desc';
 
 export interface FilterPreset {
@@ -35,6 +35,10 @@ interface FilterState {
 
   spotTypes: Spot['type'][];
   toggleSpotType: (type: Spot['type']) => void;
+
+  // Favorites
+  showOnlyFavorites: boolean;
+  setShowOnlyFavorites: (show: boolean) => void;
 
   // Sort
   sortBy: SortOption;
@@ -87,6 +91,7 @@ const initialState = {
   minWaveHeight: 0,
   maxWaveHeight: 10,
   spotTypes: ['reef', 'beach', 'point', 'unknown'] as Spot['type'][],
+  showOnlyFavorites: false,
   sortBy: 'score' as SortOption,
   sortDirection: 'desc' as SortDirection,
   isSidebarOpen: true,
@@ -110,6 +115,8 @@ export const useFilterStore = create<FilterState>((set, get) => ({
         : [...state.spotTypes, type];
       return { spotTypes };
     }),
+
+  setShowOnlyFavorites: (show) => set({ showOnlyFavorites: show }),
 
   setSortBy: (option) => set({ sortBy: option }),
 
@@ -175,5 +182,6 @@ export const useFilterStore = create<FilterState>((set, get) => ({
       minWaveHeight: 0,
       maxWaveHeight: 10,
       spotTypes: ['reef', 'beach', 'point', 'unknown'],
+      showOnlyFavorites: false,
     }),
 }));

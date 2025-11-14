@@ -7,9 +7,10 @@ import { X, Mail, Lock, Loader2 } from 'lucide-react';
 interface SignInModalProps {
   isOpen: boolean;
   onClose: () => void;
+  promptMessage?: string | null;
 }
 
-export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
+export default function SignInModal({ isOpen, onClose, promptMessage }: SignInModalProps) {
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -126,6 +127,11 @@ export default function SignInModal({ isOpen, onClose }: SignInModalProps) {
           <h2 className="text-2xl font-bold text-ocean-800 mb-2">
             {mode === 'signin' ? 'Welcome back! 🌊' : 'Join Tube Finder 🏄'}
           </h2>
+          {promptMessage ? (
+            <p className="text-sm text-ocean-700 font-medium mb-1">
+              {promptMessage}
+            </p>
+          ) : null}
           <p className="text-sm text-gray-600">
             {mode === 'signin'
               ? 'Sign in to save your favorite spots'

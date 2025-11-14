@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import UserMenu from './auth/UserMenu';
 import SignInModal from './auth/SignInModal';
+import { useUIStore } from '@/lib/stores/ui-store';
 
 export default function Header() {
-  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
+  const { isSignInModalOpen, openSignInModal, closeSignInModal, signInPromptMessage } = useUIStore();
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function Header() {
                   Forecast
                 </Link>
               </nav>
-              <UserMenu onSignInClick={() => setIsSignInModalOpen(true)} />
+              <UserMenu onSignInClick={() => openSignInModal()} />
             </div>
           </div>
         </div>
@@ -45,7 +45,8 @@ export default function Header() {
 
       <SignInModal
         isOpen={isSignInModalOpen}
-        onClose={() => setIsSignInModalOpen(false)}
+        onClose={closeSignInModal}
+        promptMessage={signInPromptMessage}
       />
     </>
   );

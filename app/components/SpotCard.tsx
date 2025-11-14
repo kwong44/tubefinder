@@ -4,6 +4,8 @@ import { useMemo } from 'react';
 import type { Spot } from '@/lib/types';
 import { useForecast, getCurrentConditions } from '@/lib/hooks/useForecast';
 import { useMapStore } from '@/lib/stores/map-store';
+import { useUIStore } from '@/lib/stores/ui-store';
+import FavoriteButton from './spots/FavoriteButton';
 import {
   formatWaveHeight,
   calculateSurfScore,
@@ -18,6 +20,7 @@ interface SpotCardProps {
 export default function SpotCard({ spot, onClick }: SpotCardProps) {
   const { data, isLoading } = useForecast(spot.location);
   const { selectedDate } = useMapStore();
+  const { openSignInModal } = useUIStore();
 
   const currentConditions = useMemo(() => {
     return getCurrentConditions(data?.forecast, selectedDate);
@@ -86,11 +89,18 @@ export default function SpotCard({ spot, onClick }: SpotCardProps) {
             {spot.location.lat.toFixed(2)}, {spot.location.lng.toFixed(2)}
           </p>
         </div>
-        {spot.rating && (
-          <div className="text-yellow-500 text-xs">
-            {'⭐'.repeat(spot.rating)}
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          <FavoriteButton
+            spotId={spot.id}
+            size="md"
+            onAuthRequired={() => openSignInModal('Sign in to save your favorite spots! 🌊')}
+          />
+          {spot.rating && (
+            <div className="text-yellow-500 text-xs">
+              {'⭐'.repeat(spot.rating)}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Description */}

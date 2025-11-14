@@ -31,7 +31,9 @@ Tube Finder is a web-based application that helps surfing storm chasers find unk
 - 📅 **Date/Time Picker** - View forecasts at different times (quick presets + custom selection)
 - 🗺️ **Wind/Swell Overlay** - Toggle directional arrows on map (wind/wave/both)
 - 💾 **Filter Presets** - Save and load custom filter configurations
-- ⚡ **Performance** - Smart caching, optimized bundle (129KB First Load)
+- 🔐 **User Authentication** - Email/password, Google OAuth, magic links
+- ❤️ **Favorites System** - Save spots, filter by favorites, sort by recency
+- ⚡ **Performance** - Smart caching, optimized bundle (186KB First Load)
 
 ## Tech Stack
 
@@ -159,7 +161,7 @@ tubefinder/
 - [x] **Filter presets** (save/load/delete custom filter configurations)
 - [x] **LocalStorage persistence** for saved presets
 
-🚧 **In Progress (Phase 5A - Authentication Foundation)**
+✅ **Completed (Phase 5A - Authentication Foundation)**
 - [x] **Supabase integration** (database, auth, storage setup)
 - [x] **Authentication system** (email/password, Google OAuth, magic links)
 - [x] **Auth UI** (sign in modal, user menu, profile dropdown)
@@ -167,14 +169,22 @@ tubefinder/
 - [x] **Row Level Security** (database schema with RLS policies)
 - [x] **Setup documentation** (complete Supabase setup guide)
 
-📋 **Planned (Phase 5B - User Features)**
-- [ ] Save favorite spots functionality
-- [ ] Favorites filtering and display
+✅ **Completed (Phase 5B - Favorites System)**
+- [x] **Favorites hooks** (React Query with optimistic updates)
+- [x] **FavoriteButton component** (animated heart icon with states)
+- [x] **Integrated in UI** (SpotCard, ForecastPopup with favorites)
+- [x] **Contextual auth prompts** (sign-in modal with custom messages)
+- [x] **Global UI store** (centralized modal management)
+- [x] **Favorites filtering** ("show only favorites" toggle in FilterPanel)
+- [x] **Favorites sorting** (by most recent favorite date)
+- [x] **Empty states** (contextual messaging for unauthenticated users)
+
+📋 **Planned (Phase 5C - User Content)**
 - [ ] Custom spot creation interface
 - [ ] User profile management
 - [ ] Photo uploads for spots
 
-📋 **Planned (Phase 5C - Enhanced Data)**
+📋 **Planned (Phase 5D - Enhanced Data)**
 - [ ] NOAA buoy data integration
 - [ ] Tide predictions and charts
 - [ ] Forecast vs. observed comparison
