@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import Providers from './providers';
+import AuthProvider from './components/auth/AuthProvider';
+import Header from './components/Header';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -27,35 +28,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-sans antialiased">
         <Providers>
-          <div className="flex flex-col min-h-screen">
-            <header className="bg-ocean-700 text-white shadow-lg">
-              <div className="container mx-auto px-4 py-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-2xl font-bold">🌊</div>
-                    <h1 className="text-2xl font-bold">Tube Finder</h1>
-                  </div>
-                  <nav className="hidden md:flex space-x-6">
-                    <Link href="/" className="hover:text-ocean-200 transition">
-                      Map
-                    </Link>
-                    <Link
-                      href="/spots"
-                      className="hover:text-ocean-200 transition"
-                    >
-                      Spots
-                    </Link>
-                    <Link
-                      href="/forecast"
-                      className="hover:text-ocean-200 transition"
-                    >
-                      Forecast
-                    </Link>
-                  </nav>
-                </div>
-              </div>
-            </header>
-            <main className="flex-1">{children}</main>
+          <AuthProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-1">{children}</main>
             <footer className="bg-gray-100 border-t">
               <div className="container mx-auto px-4 py-6">
                 <div className="text-center text-sm text-gray-600">
@@ -86,7 +62,8 @@ export default function RootLayout({
                 </div>
               </div>
             </footer>
-          </div>
+            </div>
+          </AuthProvider>
         </Providers>
       </body>
     </html>

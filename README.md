@@ -159,16 +159,33 @@ tubefinder/
 - [x] **Filter presets** (save/load/delete custom filter configurations)
 - [x] **LocalStorage persistence** for saved presets
 
-📋 **Planned (Phase 5 - Data & Integration)**
+🚧 **In Progress (Phase 5A - Authentication Foundation)**
+- [x] **Supabase integration** (database, auth, storage setup)
+- [x] **Authentication system** (email/password, Google OAuth, magic links)
+- [x] **Auth UI** (sign in modal, user menu, profile dropdown)
+- [x] **Auth store** (Zustand state management for user session)
+- [x] **Row Level Security** (database schema with RLS policies)
+- [x] **Setup documentation** (complete Supabase setup guide)
+
+📋 **Planned (Phase 5B - User Features)**
+- [ ] Save favorite spots functionality
+- [ ] Favorites filtering and display
+- [ ] Custom spot creation interface
+- [ ] User profile management
+- [ ] Photo uploads for spots
+
+📋 **Planned (Phase 5C - Enhanced Data)**
 - [ ] NOAA buoy data integration
-- [ ] Tide predictions
-- [ ] User authentication
-- [ ] Save favorite spots
-- [ ] Custom spot creation
-- [ ] Mobile PWA
-- [ ] Database integration (Supabase)
-- [ ] Community features
+- [ ] Tide predictions and charts
+- [ ] Forecast vs. observed comparison
+- [ ] Data source indicators
+
+📋 **Planned (Phase 6 - Community & Alerts)**
+- [ ] Spot ratings and reviews
+- [ ] Community condition reports
 - [ ] Email/SMS alerts for optimal conditions
+- [ ] Mobile PWA
+- [ ] Friend system and social features
 
 ## Development
 
