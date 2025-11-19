@@ -38,6 +38,9 @@ Tube Finder is a web-based application that helps surfing storm chasers find unk
 - 🌊 **Live Buoy Data** - Real-time wave observations from NOAA buoys
 - 🌙 **Tide Predictions** - High/low tide forecasts with visual timeline
 - 🏷️ **Data Source Indicators** - See where data comes from (forecast/buoy/tide)
+- ⭐ **Ratings & Reviews** - Rate spots (1-5 stars), write detailed reviews
+- 💬 **Review System** - Experience level, visited date, helpful voting
+- 📊 **Rating Summaries** - Average ratings with distribution visualization
 - ⚡ **Performance** - Smart caching, optimized bundle (191KB First Load)
 
 ## Tech Stack
@@ -208,12 +211,23 @@ tubefinder/
 - [x] **Integrated in ForecastPopup** (buoy and tide data alongside forecasts)
 - [x] **Buoy station mapping** (link surf spots to nearest buoy stations)
 
+✅ **Completed (Phase 6A - Spot Ratings & Reviews)**
+- [x] **Database schema** (spot_ratings, spot_reviews, helpful_votes tables)
+- [x] **TypeScript types** (rating, review, summary interfaces)
+- [x] **Rating hooks** (useSpotRatings with React Query)
+- [x] **Review hooks** (useSpotReviews with pagination, useUserReviews)
+- [x] **RatingStars component** (display and input modes, partial stars)
+- [x] **RatingSummary component** (average rating, distribution bars)
+- [x] **ReviewCard component** (display individual reviews)
+- [x] **ReviewList component** (pagination, helpful voting)
+- [x] **WriteReviewModal** (full form with validation)
+- [x] **UI Integration** (SpotCard ratings, ForecastPopup reviews, UserProfile reviews)
+
 📋 **Planned (Phase 6 - Community & Alerts)**
-- [ ] Spot ratings and reviews
-- [ ] Community condition reports
-- [ ] Email/SMS alerts for optimal conditions
-- [ ] Mobile PWA
-- [ ] Friend system and social features
+- [ ] Community condition reports (Phase 6B)
+- [ ] Mobile PWA (Phase 6D)
+- [ ] Email/SMS alerts for optimal conditions (Phase 6C)
+- [ ] Friend system and social features (Phase 6E)
 
 ## Development
 

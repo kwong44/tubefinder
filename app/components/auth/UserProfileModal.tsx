@@ -1,9 +1,12 @@
 'use client';
 
-import { X, Heart, MapPin, User, Mail } from 'lucide-react';
+import { X, Heart, MapPin, User, Mail, Star } from 'lucide-react';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { useFavorites } from '@/lib/hooks/useFavorites';
 import { useCustomSpots } from '@/lib/hooks/useCustomSpots';
+import { useUserReviews } from '@/lib/hooks/useUserReviews';
+import RatingStars from '../reviews/RatingStars';
+import { format } from 'date-fns';
 
 interface UserProfileModalProps {
   isOpen: boolean;
@@ -14,6 +17,7 @@ export default function UserProfileModal({ isOpen, onClose }: UserProfileModalPr
   const { user, signOut } = useAuthStore();
   const { favorites } = useFavorites();
   const { customSpots } = useCustomSpots();
+  const { reviews, reviewCount } = useUserReviews(user?.id);
 
   if (!isOpen || !user) return null;
 
@@ -62,7 +66,7 @@ export default function UserProfileModal({ isOpen, onClose }: UserProfileModalPr
           {/* Stats */}
           <div>
             <h3 className="text-sm font-semibold text-gray-700 mb-3">Your Activity</h3>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-3 gap-3">
               <div className="p-4 bg-red-50 rounded-lg border border-red-100">
                 <div className="flex items-center gap-2 mb-1">
                   <Heart className="h-4 w-4 text-red-500 fill-current" />
@@ -82,6 +86,17 @@ export default function UserProfileModal({ isOpen, onClose }: UserProfileModalPr
                 <p className="text-2xl font-bold text-ocean-600">{userCustomSpots.length}</p>
                 <p className="text-xs text-ocean-600 mt-1">
                   {userCustomSpots.length === 1 ? 'spot created' : 'spots created'}
+                </p>
+              </div>
+
+              <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+                <div className="flex items-center gap-2 mb-1">
+                  <Star className="h-4 w-4 text-yellow-600 fill-current" />
+                  <span className="text-xs font-semibold text-yellow-700">Reviews</span>
+                </div>
+                <p className="text-2xl font-bold text-yellow-600">{reviewCount}</p>
+                <p className="text-xs text-yellow-600 mt-1">
+                  {reviewCount === 1 ? 'review written' : 'reviews written'}
                 </p>
               </div>
             </div>
@@ -108,6 +123,44 @@ export default function UserProfileModal({ isOpen, onClose }: UserProfileModalPr
                     }`}>
                       {spot.is_public ? 'Public' : 'Private'}
                     </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Reviews List */}
+          {reviews.length > 0 && (
+            <div>
+              <h3 className="text-sm font-semibold text-gray-700 mb-2">Your Reviews</h3>
+              <div className="space-y-2 max-h-60 overflow-y-auto">
+                {reviews.map((review) => (
+                  <div
+                    key={review.id}
+                    className="p-3 bg-gray-50 rounded-lg border border-gray-200"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        {review.rating && (
+                          <RatingStars rating={review.rating} readonly size="sm" />
+                        )}
+                        {review.experience_level && (
+                          <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
+                            {review.experience_level.charAt(0).toUpperCase() + review.experience_level.slice(1)}
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-xs text-gray-500">
+                        {format(new Date(review.created_at), 'MMM d')}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-700 line-clamp-2 mb-2">
+                      {review.review_text}
+                    </p>
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <span>Spot: {review.spot_id}</span>
+                      <span>{review.helpful_count} helpful</span>
+                    </div>
                   </div>
                 ))}
               </div>

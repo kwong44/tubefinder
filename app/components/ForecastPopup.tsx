@@ -11,15 +11,21 @@ import {
   calculateSurfScore,
 } from '@/lib/utils/helpers';
 import { format } from 'date-fns';
+import { Star } from 'lucide-react';
 import ForecastChart from './ForecastChart';
 import DirectionArrow from './DirectionArrow';
 import FavoriteButton from './spots/FavoriteButton';
 import BuoyObservationCard from './data/BuoyObservationCard';
 import TideChart from './data/TideChart';
 import DataSourceBadge from './data/DataSourceBadge';
+import RatingSummary from './reviews/RatingSummary';
+import ReviewList from './reviews/ReviewList';
+import WriteReviewModal from './reviews/WriteReviewModal';
 import { useUIStore } from '@/lib/stores/ui-store';
+import { useAuthStore } from '@/lib/stores/auth-store';
 import { useBuoyData } from '@/lib/hooks/useBuoyData';
 import { useTideData } from '@/lib/hooks/useTideData';
+import { useSpotRatings } from '@/lib/hooks/useSpotRatings';
 
 interface ForecastPopupProps {
   spot: Spot;
@@ -37,11 +43,16 @@ export default function ForecastPopup({
   error,
 }: ForecastPopupProps) {
   const [chartView, setChartView] = useState<'24h' | '7d'>('24h');
+  const [isWriteReviewOpen, setIsWriteReviewOpen] = useState(false);
   const { openSignInModal } = useUIStore();
+  const { user } = useAuthStore();
 
   // Fetch buoy and tide data
   const { observation, buoyStation, hasBuoyData } = useBuoyData(spot.id);
   const { tideSummary, hasTideData } = useTideData(spot.id);
+
+  // Fetch ratings
+  const { ratingSummary } = useSpotRatings(spot.id);
 
   const score = currentConditions
     ? calculateSurfScore({
@@ -270,6 +281,44 @@ export default function ForecastPopup({
           <p className="text-sm text-gray-600">{spot.description}</p>
         </div>
       )}
+
+      {/* Reviews Section */}
+      <div className="mt-4 pt-4 border-t">
+        <div className="flex items-center justify-between mb-4">
+          <h4 className="text-sm font-semibold text-gray-700">Reviews</h4>
+          <button
+            onClick={() => {
+              if (!user) {
+                openSignInModal('Sign in to write a review! 📝');
+                return;
+              }
+              setIsWriteReviewOpen(true);
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-ocean-600 hover:bg-ocean-700 text-white text-sm font-medium rounded-lg transition"
+          >
+            <Star className="h-4 w-4" />
+            <span>Write Review</span>
+          </button>
+        </div>
+
+        {/* Rating Summary */}
+        {ratingSummary && (
+          <div className="mb-4">
+            <RatingSummary summary={ratingSummary} showDistribution={false} />
+          </div>
+        )}
+
+        {/* Reviews List */}
+        <ReviewList spotId={spot.id} />
+      </div>
+
+      {/* Write Review Modal */}
+      <WriteReviewModal
+        isOpen={isWriteReviewOpen}
+        onClose={() => setIsWriteReviewOpen(false)}
+        spotId={spot.id}
+        spotName={spot.name}
+      />
     </div>
   );
 }
